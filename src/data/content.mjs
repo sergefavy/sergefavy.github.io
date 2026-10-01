@@ -10,7 +10,7 @@ export const profile = {
   introduction: 'Étudiant en Master 2 Objets Connectés à l’Université de Poitiers, je développe des logiciels qui relient le matériel, les données et leurs usages.',
   about: 'Du firmware d’une station météo à un réseau de neurones en C, mes projets explorent le lien entre informatique et systèmes physiques. Je m’intéresse à l’acquisition de données, aux architectures embarquées et aux algorithmes de traitement.',
   location: 'Poitiers, France',
-  email: '',
+  email: 'deraniaina.rafelimanana@gmail.com',
   github: 'https://github.com/sergefavy',
   linkedin: '',
   siteUrl: 'https://sergefavy.github.io', // Adresse publique GitHub Pages.
@@ -132,9 +132,9 @@ export const experiences = [
 
 // Un chemin vide masque le téléchargement, sans fabriquer de document.
 export const resumes = [
-  { title: 'Systèmes embarqués / IoT', description: 'Microcontrôleurs, capteurs, firmware et systèmes connectés.', path: '', primary: true },
+  { title: 'Systèmes embarqués / IoT', description: 'Microcontrôleurs, capteurs, firmware et systèmes connectés.', path: '/cv/cv-systemes-embarques.pdf', primary: true },
   { title: 'Informatique générale', description: '', path: '' },
-  { title: 'IA / Data / Computer Vision', description: '', path: '' },
+  { title: 'IA / Data / Computer Vision', description: 'Intelligence artificielle, apprentissage supervisé et traitement d’image.', path: '/cv/cv-ia.pdf' },
   { title: 'Développement logiciel', description: '', path: '' },
 ];
 

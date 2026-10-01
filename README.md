@@ -2,7 +2,7 @@
 
 Portfolio public : https://sergefavy.github.io
 
-Systèmes embarqués, IoT, développement logiciel, IA et traitement d’image. Site statique avec sept fiches projet sans CV PDF public.
+Systèmes embarqués, IoT, développement logiciel, IA et traitement d’image. Site statique avec sept fiches projet avec deux CV PDF : systèmes embarqués / IoT et IA / Data / Computer Vision.
 
 ## Modifier et publier
 

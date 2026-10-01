@@ -36,7 +36,7 @@ test('Toutes les pages, ressources et ancres internes sont accessibles', async (
 test('Le portfolio et les fiches contiennent tous les projets retenus', async () => {
   const home = await readFile(join(out, 'index.html'), 'utf8');
   assert.equal((home.match(/class="project-card /g) || []).length, projects.length);
-  for (const id of ['projets', 'profil', 'competences', 'parcours', 'contact']) assert.ok(home.includes(`id="${id}"`));
+  for (const id of ['projets', 'profil', 'competences', 'parcours', 'cv', 'contact']) assert.ok(home.includes(`id="${id}"`));
   for (const project of projects) {
     const html = await readFile(join(out, 'projets', project.id, 'index.html'), 'utf8');
     assert.ok(html.includes(project.title.replace(/&/g, '&amp;')));
