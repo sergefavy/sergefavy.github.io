@@ -50,6 +50,7 @@ function applyFilters() {
   document.querySelector('#results-count').textContent = `${count} projet${count > 1 ? 's' : ''}`;
   document.querySelector('#empty-projects').hidden = count !== 0;
   document.querySelector('#reset-filters').hidden = selected === 'Tous' && !query;
+  requestAnimationFrame(() => { gallery?.scrollTo({ left: 0, behavior: 'instant' }); updateGallery(); });
   filters.forEach(button => { const active = button.dataset.filter === selected; button.classList.toggle('active', active); button.setAttribute('aria-pressed', String(active)); });
 }
 filters.forEach(button => button.addEventListener('click', () => { selected = button.dataset.filter; applyFilters(); }));
@@ -65,3 +66,36 @@ document.querySelector('.copy-email')?.addEventListener('click', async event => 
     document.querySelector('#copy-status').textContent = 'Adresse email copiée.';
   } catch { document.querySelector('#copy-status').textContent = 'La copie est indisponible. Vous pouvez sélectionner l’adresse email.'; }
 });
+
+const gallery = document.querySelector('#project-gallery');
+const galleryControls = document.querySelector('.gallery-controls');
+const previous = document.querySelector('.gallery-prev');
+const next = document.querySelector('.gallery-next');
+function updateGallery() {
+  if (!gallery) return;
+  previous.disabled = gallery.scrollLeft < 5;
+  next.disabled = gallery.scrollLeft >= gallery.scrollWidth - gallery.clientWidth - 5;
+}
+function moveGallery(direction) {
+  const card = cards.find(card => !card.hidden);
+  const step = card ? card.getBoundingClientRect().width + 22 : gallery.clientWidth;
+  gallery.scrollBy({ left: direction * step, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
+}
+if (gallery) {
+  galleryControls.hidden = false;
+  previous.addEventListener('click', () => moveGallery(-1));
+  next.addEventListener('click', () => moveGallery(1));
+  gallery.addEventListener('scroll', updateGallery, { passive: true });
+  new ResizeObserver(updateGallery).observe(gallery);
+  gallery.addEventListener('keydown', event => {
+    if (event.target !== gallery || !['ArrowLeft', 'ArrowRight'].includes(event.key)) return;
+    event.preventDefault();
+    moveGallery(event.key === 'ArrowRight' ? 1 : -1);
+  });
+  updateGallery();
+}
+document.querySelectorAll('[data-domain]').forEach(link => link.addEventListener('click', () => {
+  selected = link.dataset.domain;
+  search.value = '';
+  applyFilters();
+}));
