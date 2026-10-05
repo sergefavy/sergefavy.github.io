@@ -96,3 +96,11 @@ npm run publish:prepare
 ```
 
 Consulter le README pour l’ouverture du projet et `CONTRIBUTING.md` pour le workflow de publication.
+
+## Mise à jour du 5 octobre 2026 : stage et nouveaux projets
+
+- Recherche d’une alternance **ou d’un stage en systèmes embarqués et IoT**, affichée dès l’accueil, dans la page À propos et dans le contact.
+- Renommage du dépôt web en **Symfony Commerce** (`symfony-commerce`), sans modifier sa visibilité privée. Présentation basée sur les contrôleurs, les formulaires, Twig, Doctrine et Symfony 7.2.
+- Ajout d’**Orchestre C**, réalisé avec minhquan-Hoang95 : configuration de services, architecture client/orchestrateur/services, tubes IPC et sémaphores. Documentation et source de l’orchestrateur examinées dans la session GitHub autorisée.
+- Le catalogue comporte désormais neuf réalisations, avec deux nouvelles pages détaillées et illustrations conceptuelles. Le code des projets privés, leurs identifiants et leurs dates ne sont pas publiés.
+- Les PDF existants restent inchangés.

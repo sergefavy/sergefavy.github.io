@@ -19,7 +19,8 @@ export const profile = {
     active: true,
     types: ['Alternance', 'Stage', 'Emploi'],
     priority: 'Alternance',
-    text: 'Je recherche une alternance en systèmes embarqués et IoT. Je suis également ouvert à des échanges autour de stages ou d’emplois en développement logiciel, IA embarquée, machine learning et computer vision.',
+    priorities: ['Alternance', 'Stage'],
+    text: 'Je recherche une alternance ou un stage en systèmes embarqués et IoT. Je suis également ouvert à des échanges autour d’emplois en développement logiciel, IA embarquée, machine learning et computer vision.',
     domains: ['Systèmes embarqués', 'IoT', 'Développement logiciel', 'IA embarquée', 'Machine learning', 'Computer vision'],
   },
 };
@@ -117,6 +118,26 @@ export const projects = [
     highlights: ['Composants React et navigation entre les pages.', 'Catalogue, fiches produits et interface d’administration.', 'Firebase Firestore et authentification.'],
     note: 'La démonstration indiquée par le dépôt renvoyait une erreur 404 lors de la vérification du 30 septembre 2026 ; le lien est masqué.',
     sources: ['documentation.md', 'package.json', 'src/pages/ProductsPage.tsx'],
+  },
+  {
+    id: 'symfony-commerce', title: 'Symfony Commerce', category: 'Web',
+    summary: 'Relier un catalogue de produits, des comptes utilisateurs et une administration avec Symfony.',
+    description: 'Application web PHP structurée avec Symfony 7.2, Twig et Doctrine. Le projet articule la consultation d’un catalogue, la création et la modification de comptes ainsi que l’administration des produits et utilisateurs.',
+    tags: ['Symfony', 'PHP', 'Twig', 'Doctrine'], filters: ['Web'],
+    language: 'PHP', icon: 'layout', repository: '', visibility: 'private', github: '', demo: '', updatedAt: '', status: 'Projet web',
+    highlights: ['Catalogue de produits issu des entités Doctrine et rendu avec Twig.', 'Formulaires Symfony pour les produits et les profils utilisateurs.', 'Comptes avec mots de passe hachés et rôles client, administrateur et super administrateur.'],
+    note: 'Le code reste privé. Cette présentation décrit les éléments examinés ; aucun paiement en ligne, résultat commercial ou déploiement de l’application n’est revendiqué.',
+    sources: ['composer.json', 'src/Controller/ProductController.php', 'src/Controller/UsersController.php', 'src/Controller/AdminController.php'],
+  },
+  {
+    id: 'orchestre-c', title: 'Orchestre C · Coordination de services', category: 'Programmation système',
+    summary: 'Faire communiquer des clients, un orchestrateur et des services en C.',
+    description: 'Projet de programmation système réalisé avec minhquan-Hoang95. Un orchestrateur lit la configuration des services et organise les échanges avec les clients. Le code sépare les rôles et les routines de communication en modules dédiés.',
+    tags: ['C', 'Tubes IPC', 'Sémaphores', 'Shell'], filters: ['C/C++'],
+    language: 'C', icon: 'terminal', repository: '', visibility: 'private', github: '', demo: '', updatedAt: '', status: 'Projet collaboratif',
+    highlights: ['Architecture modulaire : client, orchestrateur, services et configuration.', 'Tubes anonymes et tubes nommés pour les communications entre processus.', 'Sémaphores pour synchroniser les échanges et scripts Shell de compilation.'],
+    note: 'Travail réalisé avec minhquan-Hoang95. Le dépôt reste privé ; la présentation repose sur la documentation et le code examinés, sans attribuer de contribution individuelle précise ni revendiquer un benchmark.',
+    sources: ['PROJET/src/0README', 'PROJET/src/ORCHESTRE/orchestre.c'],
   },
 ];
 

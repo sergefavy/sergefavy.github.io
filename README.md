@@ -4,7 +4,7 @@ Site : **https://sergefavy.github.io/**
 
 Dépôt : **https://github.com/sergefavy/sergefavy.github.io**
 
-Projet complet, modifiable dans VS Code, Cursor, WebStorm ou un autre IDE. Site statique en JavaScript, HTML et CSS, sans dépendance npm ni serveur de données. Il présente sept projets, le parcours et deux CV PDF.
+Projet complet, modifiable dans VS Code, Cursor, WebStorm ou un autre IDE. Site statique en JavaScript, HTML et CSS, sans dépendance npm ni serveur de données. Il présente neuf projets, le parcours et deux CV PDF.
 
 ## Ouvrir et démarrer
 

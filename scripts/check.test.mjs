@@ -66,7 +66,7 @@ test('Une panne GitHub conserve exactement le snapshot existant', async () => {
     assert.equal(await readFile(file, 'utf8'), data);
   } finally { await rm(dir, { recursive: true, force: true }); }
 });
-test('Un snapshot absent ou invalide conserve les sept projets locaux', async () => {
+test('Un snapshot absent ou invalide conserve tous les projets locaux', async () => {
   const dir = await mkdtemp(join(tmpdir(), 'portfolio-fallback-'));
   try {
     await cp(join(projectRoot, 'src/data/content.mjs'), join(dir, 'content.mjs'));
