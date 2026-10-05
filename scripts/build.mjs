@@ -3,7 +3,7 @@ import { fileURLToPath } from 'node:url';
 import { profile, resumes } from '../src/data/content.mjs';
 import { projects } from '../src/data/github.mjs';
 import { escape as e } from '../src/utils/html.mjs';
-import { home, detail, notFound } from '../src/components/page.mjs';
+import { home, detail, notFound, collection, about, resumePage } from '../src/components/page.mjs';
 export const projectRoot = fileURLToPath(new URL('../', import.meta.url));
 export function document(body, title = `${profile.name} — Systèmes embarqués & IoT`, description = profile.seoDescription, path = '/') {
   const origin = profile.siteUrl?.replace(/\/$/, '') || '';
@@ -22,12 +22,20 @@ export async function build() {
   await cp(`${projectRoot}src/styles/main.css`, `${out}/assets/main.css`);
   await cp(`${projectRoot}src/main.js`, `${out}/assets/main.js`);
   await writeFile(`${out}/index.html`, document(home()));
+  for (const [slug, render, title, description] of [
+    ['projets', collection, 'Mes projets', 'Projets de Deraniaina : contexte, démarche et réalisations en embarqué, IoT et logiciel.'],
+    ['a-propos', about, 'À propos', 'Le parcours, la démarche et les compétences de Rafelimanana Deraniaina.'],
+    ['cv', resumePage, 'Mes CV', 'Consulter les CV systèmes embarqués / IoT et IA / Data / Computer Vision de Deraniaina.'],
+  ]) {
+    await mkdir(`${out}/${slug}`, { recursive: true });
+    await writeFile(`${out}/${slug}/index.html`, document(render(), `${title} — ${profile.name}`, description, `/${slug}/`));
+  }
   for (const p of projects) {
     await mkdir(`${out}/projets/${p.id}`, { recursive: true });
     await writeFile(`${out}/projets/${p.id}/index.html`, document(detail(p), `${p.title} — ${profile.name}`, p.summary, `/projets/${p.id}/`));
   }
   await writeFile(`${out}/404.html`, document(notFound(), `Page introuvable — ${profile.name}`));
-  const paths = ['/', ...projects.map(p => `/projets/${p.id}/`)];
+  const paths = ['/', '/projets/', '/a-propos/', '/cv/', ...projects.map(p => `/projets/${p.id}/`)];
   const origin = profile.siteUrl?.replace(/\/$/, '');
   await writeFile(`${out}/sitemap.xml`, `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${origin ? paths.map(path => `<url><loc>${e(origin + path)}</loc></url>`).join('') : ''}</urlset>`);
   await writeFile(`${out}/robots.txt`, `User-agent: *\nAllow: /\n${origin ? `Sitemap: ${origin}/sitemap.xml\n` : ''}`);

@@ -15,7 +15,7 @@ async function walk(folder) {
 }
 test('Toutes les pages, ressources et ancres internes sont accessibles', async () => {
   const htmlFiles = (await walk(out)).filter(path => path.endsWith('.html'));
-  assert.equal(htmlFiles.length, projects.length + 2);
+  assert.equal(htmlFiles.length, projects.length + 5);
   for (const path of htmlFiles) {
     const html = await readFile(path, 'utf8');
     assert.equal((html.match(/<h1\b/g) || []).length, 1, path);
@@ -50,7 +50,7 @@ test('Seuls les CV réellement disponibles sont proposés', async () => {
 });
 test('Métadonnées et sitemap utilisent le domaine configuré', async () => {
   const sitemap = await readFile(join(out, 'sitemap.xml'), 'utf8');
-  assert.equal((sitemap.match(/<loc>/g) || []).length, projects.length + 1);
+  assert.equal((sitemap.match(/<loc>/g) || []).length, projects.length + 4);
   assert.ok(sitemap.includes(profile.siteUrl));
   const home = await readFile(join(out, 'index.html'), 'utf8');
   assert.ok(home.includes(`rel="canonical" href="${profile.siteUrl}/"`));
@@ -93,5 +93,13 @@ test('Le navigateur ne reçoit aucun jeton ni accès GitHub obligatoire', async 
   for (const file of (await walk(out)).filter(path => /\.(js|html|json)$/.test(path))) {
     const text = await readFile(file, 'utf8');
     assert.ok(!/GITHUB_TOKEN|Bearer\s|ghp_|github_pat_|api\.github\.com|token=ATKH/.test(text), file);
+  }
+});
+
+test('Les pages de navigation ont un titre, une URL canonique et un état actif propres', async () => {
+  for (const slug of ['projets', 'a-propos', 'cv']) {
+    const html = await readFile(join(out, slug, 'index.html'), 'utf8');
+    assert.ok(html.includes(`rel="canonical" href="${profile.siteUrl}/${slug}/"`));
+    assert.ok(html.includes(`href="/${slug}/" aria-current="page"`));
   }
 });

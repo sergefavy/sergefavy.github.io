@@ -99,3 +99,70 @@ document.querySelectorAll('[data-domain]').forEach(link => link.addEventListener
   search.value = '';
   applyFilters();
 }));
+
+// Animate only when the reader has not requested reduced motion. Content is
+// always present and readable; there is no hidden-until-JavaScript state.
+const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+const motionToggle = document.querySelector('#motion-toggle');
+let motionOff = false;
+try { motionOff = localStorage.getItem('portfolio-motion') === 'off'; } catch {}
+const activeEntrances = new Set();
+function motionAllowed() { return !motionOff && !reducedMotion.matches; }
+function syncMotion() {
+  root.dataset.motion = motionAllowed() ? 'on' : 'off';
+  if (motionToggle) {
+    motionToggle.hidden = reducedMotion.matches;
+    motionToggle.textContent = motionOff ? 'Activer les animations' : 'Désactiver les animations';
+    motionToggle.setAttribute('aria-pressed', String(motionOff));
+  }
+  if (!motionAllowed()) activeEntrances.forEach(animation => animation.cancel());
+  queueStory();
+}
+motionToggle?.addEventListener('click', () => {
+  motionOff = !motionOff;
+  try { localStorage.setItem('portfolio-motion', motionOff ? 'off' : 'on'); } catch {}
+  syncMotion();
+});
+reducedMotion.addEventListener('change', syncMotion);
+const entrances = new IntersectionObserver(entries => {
+  for (const entry of entries) {
+    if (!entry.isIntersecting) continue;
+    entrances.unobserve(entry.target);
+    if (!motionAllowed()) continue;
+    const animation = entry.target.animate([
+      { opacity: .3, transform: 'translateY(28px)' },
+      { opacity: 1, transform: 'translateY(0)' },
+    ], { duration: 650, easing: 'cubic-bezier(.2,.65,.3,1)' });
+    activeEntrances.add(animation);
+    animation.finished.catch(() => {}).finally(() => activeEntrances.delete(animation));
+  }
+}, { threshold: .12 });
+document.querySelectorAll('.section-heading,.profile-layout,.skill-card,.cv-card,.timeline li,.story-step,.journey-preview,.page-intro').forEach(element => entrances.observe(element));
+const story = document.querySelector('.story-layout');
+const storyObject = document.querySelector('.story-object');
+const storyHalo = document.querySelector('.story-halo');
+const storySignal = document.querySelector('.story-signal');
+let storyFrame = 0;
+function drawStory() {
+  storyFrame = 0;
+  if (!story) return;
+  if (!motionAllowed()) {
+    storyObject.style.transform = '';
+    storyHalo.style.transform = '';
+    storySignal.style.opacity = '';
+    storySignal.style.removeProperty('--signal');
+    return;
+  }
+  const rect = story.getBoundingClientRect();
+  const progress = Math.min(1, Math.max(0, (innerHeight * .35 - rect.top) / Math.max(1, rect.height - innerHeight * .5)));
+  storyObject.style.transform = `perspective(900px) rotateY(${-15 + progress * 30}deg) rotateZ(${-7 + progress * 14}deg) scale(${.86 + progress * .18})`;
+  storyHalo.style.transform = `scale(${.85 + progress * .65})`;
+  storySignal.style.opacity = String(.2 + progress * .8);
+  storySignal.style.setProperty('--signal', String(progress));
+}
+function queueStory() { if (story && !storyFrame) storyFrame = requestAnimationFrame(drawStory); }
+if (story) {
+  addEventListener('scroll', queueStory, { passive: true });
+  addEventListener('resize', queueStory, { passive: true });
+}
+syncMotion();
