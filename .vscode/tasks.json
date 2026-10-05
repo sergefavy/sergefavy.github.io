@@ -1,0 +1,8 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    { "label": "Portfolio : aperçu local", "type": "shell", "command": "npm run dev", "isBackground": true, "problemMatcher": [] },
+    { "label": "Portfolio : préparer la publication", "type": "shell", "command": "npm run publish:prepare", "group": { "kind": "build", "isDefault": true }, "problemMatcher": [] },
+    { "label": "Portfolio : activer les règles Git", "type": "shell", "command": "npm run setup", "problemMatcher": [] }
+  ]
+}

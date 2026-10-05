@@ -10,8 +10,9 @@
     "dev": "node scripts/serve.mjs --watch",
     "build": "node scripts/build.mjs",
     "preview": "node scripts/serve.mjs",
-    "check": "node --test scripts/check.test.mjs",
+    "check": "node --test scripts/check.test.mjs scripts/validate-commit.test.mjs",
     "sync:github": "node --env-file-if-exists=.env scripts/sync-github.mjs",
-    "publish:prepare": "npm run build && npm run check && node scripts/prepare-pages.mjs"
+    "publish:prepare": "npm run build && npm run check && node scripts/prepare-pages.mjs",
+    "setup": "node scripts/setup.mjs"
   }
 }

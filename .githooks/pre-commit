@@ -1,0 +1,3 @@
+#!/bin/sh
+# Vérifie les espaces et les marqueurs de conflit dans les changements indexés.
+git diff --cached --check
